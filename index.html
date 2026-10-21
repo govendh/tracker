@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f3ff">
+  <title>Study Planner</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(
+          circle at 10% 15%,
+          rgba(255, 182, 213, 0.38),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(180, 164, 255, 0.38),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 50% 90%,
+          rgba(148, 235, 215, 0.32),
+          transparent 40%
+        ),
+        linear-gradient(
+          135deg,
+          #fff7fb,
+          #f6f3ff,
+          #f0fcf8
+        );
+      background-attachment: fixed;
+      background-size: cover;
+      color: #293047;
+      min-height: 100vh;
+      padding: 35px 16px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: inline-block;
+      color: #7954d9;
+      background: rgba(238, 230, 255, 0.85);
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      letter-spacing: -0.8px;
+    }
+
+    .subtitle {
+      color: #747c91;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .motivation {
+      background: linear-gradient(
+        120deg,
+        rgba(233, 225, 255, 0.94),
+        rgba(255, 228, 239, 0.94)
+      );
+      border: 1px solid rgba(226, 213, 255, 0.95);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 28px rgba(129, 91, 175, 0.07);
+    }
+
+    .quote-label {
+      color: #8666c9;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      margin-bottom: 12px;
+    }
+
+    #quoteText {
+      font-size: 17px;
+      font-weight: 650;
+      line-height: 1.7;
+      color: #59418d;
+    }
+
+    #quoteAuthor {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #816ca7;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(233, 228, 242, 0.9);
+      border-top: 4px solid #a084ee;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 10px 35px rgba(81, 61, 120, 0.10);
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: #81889a;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 650;
+      color: #414960;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #e0dfea;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: #293047;
+      background: rgba(255, 255, 255, 0.92);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #a084ee;
+      box-shadow: 0 0 0 3px rgba(160, 132, 238, 0.14);
+    }
+
+    textarea {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #a3a7b5;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #8967e8, #e477b1);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      filter: brightness(0.96);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(137, 103, 232, 0.2);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    #message {
+      display: none;
+      margin-top: 16px;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    #message.success {
+      display: block;
+      color: #176c48;
+      background: #e8f8ef;
+      border: 1px solid #c8ecd8;
+    }
+
+    #message.error {
+      display: block;
+      color: #a42d40;
+      background: #fff0f1;
+      border: 1px solid #f4d1d8;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      line-height: 1.9;
+      color: #858b9b;
+    }
+
+    footer strong {
+      color: #7954d9;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 24px 13px;
+        background-attachment: scroll;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <div class="brand">PERSONAL STUDY PLANNER</div>
+      <h1>Plan your progress.</h1>
+      <p class="subtitle">
+        Set your daily targets, stay consistent, and make every study session count.
+      </p>
+    </header>
+
+    <section class="motivation">
+      <div class="quote-label">A LITTLE MOTIVATION FOR TODAY</div>
+      <p id="quoteText"></p>
+    </section>
+
+    <section class="card">
+      <h2>Add a study task</h2>
+      <p class="description">
+        Set your target, record your progress, and decide what comes next.
+      </p>
+
+      <form id="taskForm">
+        <div class="grid">
+          <div class="field">
+            <label for="date">Date *</label>
+            <input type="date" id="date" required>
+          </div>
+
+          <div class="field">
+            <label for="completed">Status</label>
+            <select id="completed">
+              <option value="">Pending</option>
+              <option value="Yes">Completed</option>
+              <option value="No">Not completed</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="task">Study target *</label>
+            <input
+              type="text"
+              id="task"
+              maxlength="160"
+              placeholder="Enter your study target"
+              required
+            >
+          </div>
+
+          <div class="field full">
+            <label for="reason">Reason or difficulty</label>
+            <input
+              type="text"
+              id="reason"
+              placeholder="What made this difficult?"
+            >
+          </div>
+
+          <div class="field full">
+            <label for="remarks">Notes / next target</label>
+            <textarea
+              id="remarks"
+              placeholder="Write your next target or any notes"
+            ></textarea>
+          </div>
+
+          <div class="field full">
+            <button type="submit" id="saveButton">Save task</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <footer>
+      Stay consistent. Trust your progress.<br>
+      Need help? Contact <strong>.</strong>
+    </footer>
+  </main>
+
+  <script>
+    const quotes = [
+      "Small steps every day lead to big results.",
+      "Focus on progress, not perfection.",
+      "Consistency makes difficult things easier.",
+      "Your goals deserve a little effort every day.",
+      "You do not have to be perfect. Just keep moving forward.",
+      "Every focused study session is progress.",
+      "Believe in your preparation and keep going.",
+      "Set your next target. Start on time. Finish with confidence.",
+      "Your effort today builds your confidence tomorrow.",
+      "Take one task at a time. You are making progress."
+    ];
+
+    const quoteIndex = Math.floor(Math.random() * quotes.length);
+    document.getElementById("quoteText").textContent = quotes[quoteIndex];
+
+    const now = new Date();
+    document.getElementById("date").value =
+      `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  </script>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
